@@ -53,7 +53,8 @@
     .button.secondary:hover { background: var(--sky-tint); }
 
     .hero-card, .research-card { background: var(--sky-surface); border: 1px solid var(--sky-border); }
-    .photo-placeholder { background: var(--sky-tint); color: var(--sky-accent-dark); }
+    .photo-placeholder { background: var(--sky-tint); color: var(--sky-accent-dark); overflow: hidden; padding: 0; }
+    .photo-placeholder img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
     .cv-box { background: var(--sky-tint); border: 1px solid var(--sky-border); }
     .publication { border-color: var(--sky-border); }
 
@@ -113,7 +114,7 @@
       <div class="hero-card">
 
         <div class="photo-placeholder">
-          YOUR PHOTO
+          <img src="Ran_He.JPG" alt="Portrait of Ran He">
         </div>
 
         <h2>Ran He</h2>
