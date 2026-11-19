@@ -15,6 +15,58 @@
   >
 
   <link rel="stylesheet" href="style.css">
+
+  <!-- ===== Light-blue theme: overrides the colors in style.css ===== -->
+  <style>
+    :root {
+      --sky-bg:          #f2f8fd;  /* page background */
+      --sky-surface:     #ffffff;  /* cards */
+      --sky-tint:        #e4f0fa;  /* light-blue panels */
+      --sky-border:      #cfe2f2;
+      --sky-accent:      #3a8fd0;  /* light-blue accent */
+      --sky-accent-dark: #1f6aa5;  /* links, buttons, labels */
+      --sky-ink:         #16324f;  /* main text (deep navy) */
+      --sky-muted:       #4f6b85;  /* secondary text */
+    }
+
+    body { background: var(--sky-bg); color: var(--sky-ink); }
+
+    nav { background: rgba(242, 248, 253, 0.92); border-bottom: 1px solid var(--sky-border); }
+    nav a, .name, .nav-links a { color: var(--sky-ink); }
+    .nav-links a:hover { color: var(--sky-accent-dark); }
+
+    h1, h2, h3 { color: var(--sky-ink); }
+    .eyebrow, .section-label, .number, .year { color: var(--sky-accent-dark); }
+    .hero-description, .section-intro, .journal { color: var(--sky-muted); }
+
+    .button.primary {
+      background: var(--sky-accent-dark);
+      border-color: var(--sky-accent-dark);
+      color: #fff;
+    }
+    .button.primary:hover { background: #185a8e; border-color: #185a8e; }
+    .button.secondary {
+      background: transparent;
+      border: 1px solid var(--sky-accent);
+      color: var(--sky-accent-dark);
+    }
+    .button.secondary:hover { background: var(--sky-tint); }
+
+    .hero-card, .research-card { background: var(--sky-surface); border: 1px solid var(--sky-border); }
+    .photo-placeholder { background: var(--sky-tint); color: var(--sky-accent-dark); }
+    .cv-box { background: var(--sky-tint); border: 1px solid var(--sky-border); }
+    .publication { border-color: var(--sky-border); }
+
+    .contact-links a { color: var(--sky-accent-dark); border-color: var(--sky-border); }
+    .contact-links a:hover { background: var(--sky-tint); }
+
+    footer { color: var(--sky-muted); border-color: var(--sky-border); }
+
+    /* Publication links */
+    .publication h3 a { color: inherit; text-decoration: none; }
+    .publication h3 a:hover { color: var(--sky-accent-dark); text-decoration: underline; }
+    .journal a { color: var(--sky-accent-dark); font-weight: 500; }
+  </style>
 </head>
 
 <body>
@@ -173,65 +225,65 @@
       </div>
 
       <div class="publication">
-        <p class="year">In press</p>
+        <p class="year">2026</p>
         <div>
-          <h3>Facies-specific siderite clumped isotopes indicate subtropical climate in the Paleocene mid-latitude continental interior</h3>
+          <h3><a href="https://doi.org/10.2110/jsr.2026.008" target="_blank" rel="noopener">Facies-specific siderite clumped isotopes indicate subtropical climate in the Paleocene mid-latitude continental interior</a></h3>
           <p><strong>He, R.</strong>, Lloyd, M., Currie, B., Ingalls, M.</p>
-          <p class="journal">In press, Journal of Sedimentary Research</p>
+          <p class="journal">Journal of Sedimentary Research, 96(6), 1131–1151 · <a href="https://doi.org/10.2110/jsr.2026.008" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
       <div class="publication">
         <p class="year">2026</p>
         <div>
-          <h3>Confirmation of &Delta;<sup>2</sup>-sterenes as precursors of 3-methylsteranes</h3>
+          <h3><a href="https://doi.org/10.1016/j.orggeochem.2026.105231" target="_blank" rel="noopener">Confirmation of &Delta;<sup>2</sup>-sterenes as precursors of 3-methylsteranes</a></h3>
           <p>Hartke, E.R., Freeman, K.H., Macalady, J.L., <strong>He, R.</strong>, Brassell, S.C.</p>
-          <p class="journal">Organic Geochemistry, 220, 105231</p>
+          <p class="journal">Organic Geochemistry, 220, 105231 · <a href="https://doi.org/10.1016/j.orggeochem.2026.105231" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
       <div class="publication">
         <p class="year">2025</p>
         <div>
-          <h3>Kiritimati Lagoon temperature reconstruction from clumped isotopes</h3>
+          <h3><a href="https://doi.org/10.1002/dep2.70024" target="_blank" rel="noopener">Anomalously cool clumped isotope temperatures in tropical lagoon carbonates</a></h3>
           <p>Wyman-Feravich, D.A., Ingalls, M., Conroy, J.L., <strong>He, R.</strong>, Lusk, S.</p>
-          <p class="journal">The Depositional Record, 11(5), 1479–1496</p>
+          <p class="journal">The Depositional Record, 11(5), 1479–1496 · <a href="https://doi.org/10.1002/dep2.70024" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
       <div class="publication">
         <p class="year">2025</p>
         <div>
-          <h3>Resolving the Snowball Earth conundrum: the role of the marine dissolved organic carbon pool</h3>
+          <h3><a href="https://doi.org/10.1016/j.scib.2025.03.056" target="_blank" rel="noopener">Resolving the Snowball Earth conundrum: the role of marine dissolved organic carbon pool</a></h3>
           <p>Shen, B., Lang, X.G., Wang, R., Liu, Y., Zhang, S., Huang, T., Chu, X., Cui, Y., Ding, W., Du, Y., <strong>He, R.</strong>, Huang, K., Hu, Y., Hu, J., Gu, S., Kuang, H., Lan, Z., Li, C., Li, F., Liu, Y., Luo, G., Ma, H., Ning, M., Qu, Y., Peng, Y., Peng, Y., Wang, J., Wang, J., Xing, C., Xu, B., Yang, J., Ye, Q., Yin, Z., Yu, W., Yuan, X., Zhou, C., Zhu, S., Zhu, X.</p>
-          <p class="journal">Science Bulletin, 70(13), 2173–2189 (review)</p>
+          <p class="journal">Science Bulletin, 70(13), 2173–2189 (review) · <a href="https://doi.org/10.1016/j.scib.2025.03.056" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
       <div class="publication">
         <p class="year">2022</p>
         <div>
-          <h3>Low marine sulfate levels during the initiation of the Cryogenian Marinoan glaciation</h3>
+          <h3><a href="https://doi.org/10.1016/j.precamres.2022.106737" target="_blank" rel="noopener">Low marine sulfate levels during the initiation of the Cryogenian Marinoan glaciation</a></h3>
           <p>Zhao, K., Lang, X.G., Zhu, G., Feng, M., <strong>He, R.</strong>, Guan, C., Li, S., Zhu, S., Zhou, C.</p>
-          <p class="journal">Precambrian Research, 377, 106737</p>
+          <p class="journal">Precambrian Research, 377, 106737 · <a href="https://doi.org/10.1016/j.precamres.2022.106737" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
       <div class="publication">
         <p class="year">2021</p>
         <div>
-          <h3>A rapid rise of seawater &delta;<sup>13</sup>C during the deglaciation of the Marinoan Snowball Earth</h3>
+          <h3><a href="https://doi.org/10.1016/j.gloplacha.2021.103672" target="_blank" rel="noopener">A rapid rise of seawater &delta;<sup>13</sup>C during the deglaciation of the Marinoan Snowball Earth</a></h3>
           <p><strong>He, R.</strong>, Lang, X.G., Shen, B.</p>
-          <p class="journal">Global and Planetary Change, 207, 103672</p>
+          <p class="journal">Global and Planetary Change, 207, 103672 · <a href="https://doi.org/10.1016/j.gloplacha.2021.103672" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
       <div class="publication">
         <p class="year">2020</p>
         <div>
-          <h3>Mg isotopic systematics during early diagenetic aragonite–calcite transition: insights from the Key Largo Limestone</h3>
+          <h3><a href="https://doi.org/10.1016/j.chemgeo.2020.119876" target="_blank" rel="noopener">Mg isotopic systematics during early diagenetic aragonite–calcite transition: insights from the Key Largo Limestone</a></h3>
           <p><strong>He, R.</strong>*, Ning, M.*, Huang, K.J., Ma, H.R., Shen, B. &nbsp;<em>(*co-first authors)</em></p>
-          <p class="journal">Chemical Geology, 558, 119876</p>
+          <p class="journal">Chemical Geology, 558, 119876 · <a href="https://doi.org/10.1016/j.chemgeo.2020.119876" target="_blank" rel="noopener">DOI</a></p>
         </div>
       </div>
 
