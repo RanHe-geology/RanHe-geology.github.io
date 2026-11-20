@@ -48,12 +48,13 @@
       color: #fff;
     }
     .button.primary:hover { background: #185a8e; border-color: #185a8e; }
+    /* Secondary button now matches the primary (both filled) */
     .button.secondary {
-      background: transparent;
-      border: 1px solid var(--sky-accent);
-      color: var(--sky-accent-dark);
+      background: var(--sky-accent-dark);
+      border: 1px solid var(--sky-accent-dark);
+      color: #fff;
     }
-    .button.secondary:hover { background: var(--sky-tint); }
+    .button.secondary:hover { background: #185a8e; border-color: #185a8e; }
 
     .hero-card, .research-card { background: var(--sky-surface); border: 1px solid var(--sky-border); }
     .photo-placeholder { background: var(--sky-tint); color: var(--sky-accent-dark); overflow: hidden; padding: 0; }
@@ -158,8 +159,9 @@
         </p>
 
         <div class="buttons">
+          <a class="button primary" href="#about">About Me</a>
           <a class="button primary" href="#research">Research</a>
-          <a class="button secondary" href="#publications">Publications</a>
+          <a class="button primary" href="#publications">Publications</a>
         </div>
 
       </div>
