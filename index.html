@@ -19,22 +19,22 @@
   <!-- Leaflet (interactive map library) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 
-  <!-- ===== Light-blue theme: overrides the colors in style.css ===== -->
+  <!-- ===== Warm stone theme: overrides the colors in style.css ===== -->
   <style>
     :root {
-      --sky-bg:          #f2f8fd;  /* page background */
-      --sky-surface:     #ffffff;  /* cards */
-      --sky-tint:        #e4f0fa;  /* light-blue panels */
-      --sky-border:      #cfe2f2;
-      --sky-accent:      #3a8fd0;  /* light-blue accent */
-      --sky-accent-dark: #1f6aa5;  /* links, buttons, labels */
-      --sky-ink:         #16324f;  /* main text (deep navy) */
-      --sky-muted:       #4f6b85;  /* secondary text */
+      --sky-bg:          #f3f0eb;  /* page background (warm ivory) */
+      --sky-surface:     #faf8f4;  /* cards */
+      --sky-tint:        #ebe6de;  /* light stone panels */
+      --sky-border:      #ddd6ca;
+      --sky-accent:      #8c7f6c;  /* taupe accent */
+      --sky-accent-dark: #2e2d2b;  /* links, buttons, labels (charcoal) */
+      --sky-ink:         #2b2a28;  /* main text */
+      --sky-muted:       #6d675f;  /* secondary text */
     }
 
     body { background: var(--sky-bg); color: var(--sky-ink); }
 
-    nav { background: rgba(242, 248, 253, 0.92); border-bottom: 1px solid var(--sky-border); }
+    nav { background: rgba(243, 240, 235, 0.94); border-bottom: 1px solid var(--sky-border); }
     nav a, .name, .nav-links a { color: var(--sky-ink); }
     .nav-links a:hover { color: var(--sky-accent-dark); }
 
@@ -47,14 +47,14 @@
       border-color: var(--sky-accent-dark);
       color: #fff;
     }
-    .button.primary:hover { background: #185a8e; border-color: #185a8e; }
+    .button.primary:hover { background: #111; border-color: #111; }
     /* Secondary button now matches the primary (both filled) */
     .button.secondary {
       background: var(--sky-accent-dark);
       border: 1px solid var(--sky-accent-dark);
       color: #fff;
     }
-    .button.secondary:hover { background: #185a8e; border-color: #185a8e; }
+    .button.secondary:hover { background: #111; border-color: #111; }
 
     .hero-card, .research-card { background: var(--sky-surface); border: 1px solid var(--sky-border); }
     .photo-placeholder { background: var(--sky-tint); color: var(--sky-accent-dark); overflow: hidden; padding: 0; }
@@ -69,7 +69,7 @@
 
     /* Publication links */
     .section-intro a { color: var(--sky-accent-dark); text-decoration: underline; text-underline-offset: 2px; }
-    .section-intro a:hover { color: #185a8e; }
+    .section-intro a:hover { color: #000; }
     .publication h3 a { color: inherit; text-decoration: none; }
     .publication h3 a:hover { color: var(--sky-accent-dark); text-decoration: underline; }
 
@@ -146,7 +146,7 @@
       display: none; position: absolute; right: 16px; top: calc(100% + 8px);
       min-width: 200px; padding: 8px; z-index: 200;
       background: var(--sky-surface); border: 1px solid var(--sky-border); border-radius: 14px;
-      box-shadow: 0 12px 32px rgba(22, 50, 79, 0.14);
+      box-shadow: 0 12px 32px rgba(43, 42, 40, 0.12);
     }
     nav.menu-open .mobile-menu { display: block; }
     .mobile-menu a {
@@ -162,7 +162,7 @@
     #site-map {
       position: relative; z-index: 0;            /* keeps map under the sticky nav */
       height: 440px; border-radius: 16px;
-      border: 1px solid var(--sky-border); background: #0e2236;  /* dark while imagery loads */
+      border: 1px solid var(--sky-border); background: #2b2a28;  /* dark while imagery loads */
     }
     @media (max-width: 720px) { #site-map { height: 320px; } }
 
@@ -815,7 +815,7 @@
 
         L.circleMarker(s.ll, {
           radius: 8, weight: 2.5,
-          color: "#ffffff", fillColor: "#3a8fd0", fillOpacity: 1
+          color: "#ffffff", fillColor: "#2e2d2b", fillOpacity: 1
         })
         .addTo(map)
         .bindTooltip(s.name, {
