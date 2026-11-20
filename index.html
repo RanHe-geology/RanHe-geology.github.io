@@ -86,7 +86,7 @@
     #site-map {
       position: relative; z-index: 0;            /* keeps map under the sticky nav */
       height: 440px; border-radius: 16px;
-      border: 1px solid var(--sky-border); background: var(--sky-tint);
+      border: 1px solid var(--sky-border); background: #0e2236;  /* dark while imagery loads */
     }
     @media (max-width: 720px) { #site-map { height: 320px; } }
 
@@ -614,16 +614,37 @@
 
       var map = L.map("site-map", {
         scrollWheelZoom: false,   // don't hijack page scrolling
-        worldCopyJump: true,
         minZoom: 1,
-        maxZoom: 10
+        maxZoom: 18,
+        maxBounds: [[-85, -200], [85, 200]],
+        maxBoundsViscosity: 1.0
       });
 
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: "abcd",
-        maxZoom: 19
-      }).addTo(map);
+      // Base map: satellite imagery (no API key needed)
+      //   Primary: Esri World Imagery (detailed, zooms in to field scale)
+      //   Fallback: NASA Blue Marble, used automatically if Esri tiles fail to load
+      var esri = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+          attribution: 'Imagery &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>, Maxar, Earthstar Geographics',
+          maxZoom: 18
+        }).addTo(map);
+
+      var nasa = L.tileLayer(
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg", {
+          attribution: 'Imagery: <a href="https://earthdata.nasa.gov/gibs" target="_blank" rel="noopener">NASA GIBS</a> Blue Marble',
+          maxZoom: 8
+        });
+
+      var esriLoaded = false, esriErrors = 0;
+      esri.on("tileload", function () { esriLoaded = true; });
+      esri.on("tileerror", function () {
+        esriErrors++;
+        if (!esriLoaded && esriErrors >= 3 && map.hasLayer(esri)) {
+          map.removeLayer(esri);
+          nasa.addTo(map);
+          map.setMaxZoom(8);
+        }
+      });
 
       var pts = [];
       sites.forEach(function (s) {
@@ -632,8 +653,8 @@
         }).join('<br>');
 
         L.circleMarker(s.ll, {
-          radius: 8, weight: 2,
-          color: "#1f6aa5", fillColor: "#3a8fd0", fillOpacity: 0.9
+          radius: 8, weight: 2.5,
+          color: "#ffffff", fillColor: "#3a8fd0", fillOpacity: 1
         })
         .addTo(map)
         .bindTooltip(s.name, {
