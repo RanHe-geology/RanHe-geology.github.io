@@ -16,6 +16,9 @@
 
   <link rel="stylesheet" href="style.css">
 
+  <!-- Leaflet (interactive map library) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+
   <!-- ===== Light-blue theme: overrides the colors in style.css ===== -->
   <style>
     :root {
@@ -75,6 +78,46 @@
     .card-link { margin-top: 12px; }
     .card-link a { color: var(--sky-accent-dark); font-weight: 500; text-decoration: none; }
     .card-link a:hover { text-decoration: underline; }
+
+    /* ===== Field-area world map ===== */
+    .map-block { margin-top: 8px; }
+    .map-block h3 { margin: 0 0 6px; }
+    .map-block .map-note { color: var(--sky-muted); margin: 0 0 16px; }
+    #site-map {
+      position: relative; z-index: 0;            /* keeps map under the sticky nav */
+      height: 440px; border-radius: 16px;
+      border: 1px solid var(--sky-border); background: var(--sky-tint);
+    }
+    @media (max-width: 720px) { #site-map { height: 320px; } }
+
+    .site-list {
+      list-style: none; padding: 0; margin: 18px 0 0;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px;
+    }
+    @media (max-width: 720px) { .site-list { grid-template-columns: 1fr; } }
+    .site-list li { display: flex; gap: 10px; align-items: baseline; color: var(--sky-muted); font-size: 0.95rem; }
+    .site-list li strong { color: var(--sky-ink); font-weight: 600; }
+    .site-dot {
+      flex: none; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--sky-accent); border: 2px solid var(--sky-accent-dark);
+      transform: translateY(1px);
+    }
+    .site-list a { color: var(--sky-accent-dark); text-decoration: none; }
+    .site-list a:hover { text-decoration: underline; }
+
+    /* Leaflet labels & popups in the site's style */
+    .leaflet-container { font-family: inherit; }
+    .site-label {
+      background: rgba(255,255,255,0.92); border: 1px solid var(--sky-border);
+      color: var(--sky-ink); font-weight: 600; font-size: 12px;
+      padding: 2px 8px; border-radius: 999px; box-shadow: none;
+    }
+    .site-label::before { display: none; }
+    .leaflet-popup-content-wrapper { border-radius: 12px; }
+    .leaflet-popup-content { margin: 12px 16px; color: var(--sky-ink); line-height: 1.45; }
+    .leaflet-popup-content .pop-title { font-weight: 600; font-size: 14px; }
+    .leaflet-popup-content .pop-meta { color: var(--sky-muted); font-size: 13px; }
+    .leaflet-popup-content a { color: var(--sky-accent-dark); }
   </style>
 </head>
 
@@ -177,7 +220,7 @@
 
       <div class="research-grid">
 
-        <article class="research-card">
+        <article class="research-card" id="project-01">
 
           <div class="number">01</div>
 
@@ -194,7 +237,7 @@
         </article>
 
 
-        <article class="research-card">
+        <article class="research-card" id="project-02">
 
           <div class="number">02</div>
 
@@ -213,7 +256,7 @@
         </article>
 
 
-        <article class="research-card">
+        <article class="research-card" id="project-03">
 
           <div class="number">03</div>
 
@@ -232,7 +275,7 @@
         </article>
 
 
-        <article class="research-card">
+        <article class="research-card" id="project-04">
 
           <div class="number">04</div>
 
@@ -251,6 +294,7 @@
         </article>
 
       </div>
+
 
     </section>
 
@@ -509,6 +553,31 @@
 
     </section>
 
+    <!-- FIELD AREAS MAP -->
+    <section id="field-areas">
+
+      <p class="section-label">FIELD AREAS</p>
+
+      <h2>Field Areas</h2>
+
+      <div class="map-block">
+
+        <p class="map-note">Study sites for my research projects. Click a marker for details.</p>
+
+        <div id="site-map" role="img" aria-label="World map showing study sites: Wind River Basin, Appalachian Basin, Key Largo, and Quruqtagh"></div>
+
+        <ul class="site-list">
+          <li><span class="site-dot"></span><span><strong>Wind River Basin</strong>, Wyoming, USA · Paleocene siderite · <a href="#project-01">01</a>, <a href="#project-02">02</a></span></li>
+          <li><span class="site-dot"></span><span><strong>Appalachian Basin</strong>, USA · Pennsylvanian siderite · <a href="#project-01">01</a></span></li>
+          <li><span class="site-dot"></span><span><strong>Key Largo</strong>, Florida, USA · Pleistocene Key Largo Limestone · <a href="#project-04">04</a></span></li>
+          <li><span class="site-dot"></span><span><strong>Quruqtagh</strong>, Xinjiang, China · Marinoan cap carbonate · <a href="#project-03">03</a></span></li>
+        </ul>
+
+      </div>
+
+    </section>
+
+
   </main>
 
 
@@ -520,6 +589,73 @@
     </p>
   </footer>
 
+
+  <!-- ===== Field-area map ===== -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    (function () {
+      if (!window.L) return;   // map library failed to load; the site list still shows
+
+      // Approximate site coordinates [lat, lon]; edit to refine
+      var sites = [
+        { name: "Wind River Basin", place: "Wyoming, USA",
+          detail: "Paleocene siderite", ll: [43.1, -108.2],
+          projects: [["01", "Siderite diagenesis"], ["02", "Paleocene climate"]], side: "left" },
+        { name: "Appalachian Basin", place: "Pennsylvania & West Virginia, USA",
+          detail: "Pennsylvanian siderite", ll: [40.0, -79.8],
+          projects: [["01", "Siderite diagenesis"]], side: "right" },
+        { name: "Key Largo", place: "Florida Keys, USA",
+          detail: "Pleistocene Key Largo Limestone", ll: [25.09, -80.44],
+          projects: [["04", "Mg isotopes"]], side: "right" },
+        { name: "Quruqtagh", place: "Xinjiang, China",
+          detail: "Marinoan cap carbonate", ll: [41.4, 88.4],
+          projects: [["03", "Snowball Earth"]], side: "right" }
+      ];
+
+      var map = L.map("site-map", {
+        scrollWheelZoom: false,   // don't hijack page scrolling
+        worldCopyJump: true,
+        minZoom: 1,
+        maxZoom: 10
+      });
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 19
+      }).addTo(map);
+
+      var pts = [];
+      sites.forEach(function (s) {
+        var links = s.projects.map(function (p) {
+          return '<a href="#project-' + p[0] + '">' + p[0] + ' · ' + p[1] + '</a>';
+        }).join('<br>');
+
+        L.circleMarker(s.ll, {
+          radius: 8, weight: 2,
+          color: "#1f6aa5", fillColor: "#3a8fd0", fillOpacity: 0.9
+        })
+        .addTo(map)
+        .bindTooltip(s.name, {
+          permanent: true, direction: s.side,
+          offset: [s.side === "left" ? -10 : 10, 0],
+          className: "site-label"
+        })
+        .bindPopup(
+          '<div class="pop-title">' + s.name + '</div>' +
+          '<div class="pop-meta">' + s.place + '<br>' + s.detail + '</div>' +
+          '<div style="margin-top:6px">' + links + '</div>'
+        );
+        pts.push(s.ll);
+      });
+
+      map.fitBounds(pts, { padding: [50, 50] });
+
+      // Enable wheel zoom only after the user clicks the map
+      map.on("click", function () { map.scrollWheelZoom.enable(); });
+      map.on("mouseout", function () { map.scrollWheelZoom.disable(); });
+    })();
+  </script>
 
 </body>
 </html>
