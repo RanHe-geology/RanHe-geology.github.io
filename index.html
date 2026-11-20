@@ -119,6 +119,36 @@
     .side-progress a:focus-visible .sp-label { opacity: 1; transform: translate(0, -50%); }
     @media (max-width: 1000px) { .side-progress { display: none; } }
 
+    /* ===== Mobile menu (☰ button + pop-up list) ===== */
+    .nav-container { position: relative; }
+    .menu-toggle {
+      display: none;                      /* shown by script when the top links are hidden */
+      margin-left: auto; width: 44px; height: 44px; padding: 0;
+      background: transparent; border: 1px solid var(--sky-border); border-radius: 10px;
+      cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+    }
+    .menu-toggle span {
+      display: block; width: 20px; height: 2px; border-radius: 2px;
+      background: var(--sky-ink); transition: transform 0.2s, opacity 0.2s;
+    }
+    nav.links-hidden .menu-toggle { display: inline-flex; }
+    nav.menu-open .menu-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    nav.menu-open .menu-toggle span:nth-child(2) { opacity: 0; }
+    nav.menu-open .menu-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: absolute; right: 16px; top: calc(100% + 8px);
+      min-width: 200px; padding: 8px; z-index: 200;
+      background: var(--sky-surface); border: 1px solid var(--sky-border); border-radius: 14px;
+      box-shadow: 0 12px 32px rgba(22, 50, 79, 0.14);
+    }
+    nav.menu-open .mobile-menu { display: block; }
+    .mobile-menu a {
+      display: block; padding: 11px 14px; border-radius: 9px;
+      color: var(--sky-ink); text-decoration: none; font-size: 1rem;
+    }
+    .mobile-menu a:hover, .mobile-menu a:focus-visible { background: var(--sky-tint); color: var(--sky-accent-dark); }
+
     /* ===== Field-area world map ===== */
     .map-block { margin-top: 8px; }
     .map-block h3 { margin: 0 0 6px; }
@@ -174,6 +204,22 @@
         <a href="#teaching">Teaching</a>
         <a href="#awards">Awards</a>
         <a href="#cv">CV</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <!-- Mobile: ☰ button + pop-up menu -->
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#awards">Awards</a>
+        <a href="#cv">CV</a>
+        <a href="#field-areas">Field Areas</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -639,6 +685,46 @@
       Built with HTML & CSS · Hosted on GitHub Pages
     </p>
   </footer>
+
+
+  <!-- ===== Mobile menu ===== -->
+  <script>
+    (function () {
+      var nav = document.querySelector("body > nav");
+      var links = nav.querySelector(".nav-links");
+      var btn = nav.querySelector(".menu-toggle");
+      var menu = nav.querySelector(".mobile-menu");
+
+      function setOpen(open) {
+        nav.classList.toggle("menu-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      }
+
+      // Show the ☰ button whenever style.css hides the top links (phones, narrow windows)
+      function check() {
+        var hidden = getComputedStyle(links).display === "none";
+        nav.classList.toggle("links-hidden", hidden);
+        if (!hidden) setOpen(false);
+      }
+
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        setOpen(!nav.classList.contains("menu-open"));
+      });
+      menu.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") setOpen(false);       // close after choosing
+      });
+      document.addEventListener("click", function (e) {
+        if (!nav.contains(e.target)) setOpen(false);         // tap outside closes
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") setOpen(false);
+      });
+      window.addEventListener("resize", check);
+      check();
+    })();
+  </script>
 
 
   <!-- ===== Side progress bar ===== -->
