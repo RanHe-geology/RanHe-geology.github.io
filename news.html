@@ -129,6 +129,23 @@
     .news-item a { color: var(--sky-accent-dark); text-decoration: underline; text-underline-offset: 2px; }
     .news-item a:hover { color: #000; }
 
+    /* Cover image next to a news post */
+    .news-body { display: flex; gap: 24px; align-items: flex-start; }
+    .news-cover {
+      flex: none; width: 150px; margin: 0;
+    }
+    .news-cover img {
+      display: block; width: 100%; height: auto; border-radius: 6px;
+      border: 1px solid var(--sky-border);
+      box-shadow: 0 6px 18px rgba(43, 42, 40, 0.14);
+    }
+    .news-cover a { text-decoration: none; }
+    .news-cover figcaption { margin-top: 8px; font-size: 12px; color: var(--sky-muted); text-align: center; }
+    @media (max-width: 720px) {
+      .news-body { flex-direction: column; }
+      .news-cover { width: 140px; }
+    }
+
     /* News page */
     .nav-links a[aria-current="page"], .mobile-menu a[aria-current="page"] { color: var(--sky-accent-dark); font-weight: 600; }
     .back-link { margin-top: 32px; }
@@ -188,7 +205,16 @@
 
         <li class="news-item">
           <p class="news-date">2026</p>  <!-- e.g. change to "Jun 2026" -->
-          <div>
+          <div class="news-body">
+            <!-- Cover image: put the file "jsr-cover.jpg" next to news.html (hidden automatically if missing) -->
+            <figure class="news-cover">
+              <a href="https://doi.org/10.2110/jsr.2026.008" target="_blank" rel="noopener">
+                <img src="jsr-cover.jpg" alt="Cover of Journal of Sedimentary Research, volume 96, issue 6"
+                     onerror="this.closest('figure').style.display='none'">
+              </a>
+              <figcaption>JSR 96(6), 2026</figcaption>
+            </figure>
+            <div>
             <span class="news-tag">New paper</span>
             <h3>Siderite clumped isotopes paper published in <em>Journal of Sedimentary Research</em></h3>
             <p>
@@ -199,6 +225,7 @@
               &Delta;<sub>47</sub> signatures to show that the Paleocene continental interior at mid-latitudes
               had a subtropical climate. Many thanks to my co-authors M. Lloyd, B. Currie, and M. Ingalls!
             </p>
+            </div>
           </div>
         </li>
 
